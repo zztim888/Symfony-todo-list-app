@@ -1,0 +1,36 @@
+.heading{
+    width: 50%;
+    margin: 30px auto;
+    text-align: center;
+}
+.tech{
+    width: 50%; 
+	margin: 30px auto; 
+	border-radius: 5px; 
+	padding: 10px;	
+}
+
+form{
+    width: 50%; 
+	margin: 30px auto; 
+	border-radius: 5px; 
+	padding: 10px;	
+}
+
+table {
+    width: 50%;
+    margin: 30px auto;
+    border-collapse: collapse;
+}
+
+
+.delete{
+	text-align: center;
+}
+.delete a{
+	color: white;
+	background: #a52a2a;
+	padding: 1px 6px;
+	border-radius: 3px;
+	text-decoration: none;
+}

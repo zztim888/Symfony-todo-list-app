@@ -1,0 +1,85 @@
+<?php 
+    // initialize errors variable
+	$errors = "";
+
+	// connect to database
+	$db = mysqli_connect("localhost", "root", "WZ2Zp1og1Z22X1!", "bodo");
+
+	// insert a quote if submit button is clicked
+	if (isset($_POST['submit'])) {
+		if (empty($_POST['task'])) {
+			$errors = "You must fill in the task";
+		}else{
+			$task = $_POST['task'];
+			$sql = "INSERT INTO tasks (task) VALUES ('$task')";
+			mysqli_query($db, $sql);
+			header('location: todolist/index.php');
+		}
+	}
+    //delete
+    if (isset($_GET['del_task'])) {
+        $id = $_GET['del_task'];
+    
+        mysqli_query($db, "DELETE FROM tasks WHERE id=".$id);
+        header('location: todolist/index.php');
+    }
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+
+<div class="container">
+
+    <h1 class="heading mt-5">A Todo List Application</h1>
+    <p class="tech">Using PHP,Doctrine, Bootstrap v.5.0, and MySQL database</p>
+
+    <form  method="post" action="todolist/index.php">
+        <div class="mb-3">
+        <input type="text"  name="task" class="form-control">
+        </div>
+        <button type="submit"  name="submit" class="btn btn-primary">Submit</button> 
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Task</th>
+                <th style="width: 60px;" class="action">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        <?php 
+        // select all tasks if page is visited or refreshed
+		$tasks = mysqli_query($db, "SELECT * FROM tasks");
+
+		$i = 1; while ($row = mysqli_fetch_array($tasks)) { ?>
+			<tr>
+				<td> <?php echo $i; ?> </td>
+				<td class="task"> <?php echo $row['task']; ?> </td>
+				<td class="delete"> 
+					<a href="todolist/index.php?del_task=<?php echo $row['id'] ?>">x</a> 
+				</td>
+			</tr>
+		<?php $i++; } ?>
+
+        </tbody>
+
+    </table>
+</div>
+    
+    
+</body>
+</html>
